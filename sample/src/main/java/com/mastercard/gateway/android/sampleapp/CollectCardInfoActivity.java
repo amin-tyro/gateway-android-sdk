@@ -233,8 +233,7 @@ public class CollectCardInfoActivity extends AppCompatActivity {
 
     JSONArray getAllowedCardAuthMethods() {
         return new JSONArray()
-                .put("PAN_ONLY")
-                .put("CRYPTOGRAM_3DS");
+                .put("PAN_ONLY");
     }
 
     JSONObject getTokenizationSpecification() throws JSONException {

@@ -83,22 +83,13 @@
             app:layout_constraintTop_toBottomOf="@+id/collect_card_info_label" />
 
         <TextView
-            android:id="@+id/check_3ds_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_baseline_grid_2x"
-            android:text="@string/pay_4_check_3ds_enrollment"
-            app:layout_constraintStart_toEndOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/update_session_label" />
-
-        <TextView
             android:id="@+id/process_payment_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_baseline_grid_2x"
             android:text="@string/pay_5_process_payment"
             app:layout_constraintStart_toEndOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/check_3ds_label" />
+            app:layout_constraintTop_toBottomOf="@+id/update_session_label" />
 
         <ProgressBar
             android:id="@+id/create_session_progress"
@@ -210,43 +201,6 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline_icons"
             app:layout_constraintStart_toStartOf="@+id/guideline_icons"
             app:layout_constraintTop_toTopOf="@+id/update_session_label"
-            app:srcCompat="@drawable/ic_error_red_24dp"
-            tools:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/check_3ds_progress"
-            style="@android:style/Widget.ProgressBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/check_3ds_label"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_icons"
-            app:layout_constraintStart_toStartOf="@+id/guideline_icons"
-            app:layout_constraintTop_toTopOf="@+id/check_3ds_label"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/check_3ds_success"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/check_3ds_label"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_icons"
-            app:layout_constraintStart_toStartOf="@+id/guideline_icons"
-            app:layout_constraintTop_toTopOf="@+id/check_3ds_label"
-            app:srcCompat="@drawable/ic_check_green_24dp"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/check_3ds_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/check_3ds_label"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_icons"
-            app:layout_constraintStart_toStartOf="@+id/guideline_icons"
-            app:layout_constraintTop_toTopOf="@+id/check_3ds_label"
             app:srcCompat="@drawable/ic_error_red_24dp"
             tools:visibility="visible" />
 

@@ -32,6 +32,7 @@ public class ProcessPaymentActivity extends AppCompatActivity {
     ActivityProcessPaymentBinding binding;
     Gateway gateway;
     String sessionId, apiVersion, threeDSecureId, orderId, transactionId;
+    // leave this false, since Google pay is not supported yet
     boolean isGooglePay = false;
     ApiController apiController = ApiController.getInstance();
 
@@ -62,12 +63,7 @@ public class ProcessPaymentActivity extends AppCompatActivity {
         // bind buttons
         binding.startButton.setOnClickListener(v -> createSession());
         binding.confirmButton.setOnClickListener(v -> {
-            // 3DS is not applicable to Google Pay transactions
-            if (isGooglePay) {
-                processPayment();
-            } else {
-                check3dsEnrollment();
-            }
+            processPayment();
         });
         binding.doneButton.setOnClickListener(v -> finish());
 
@@ -76,11 +72,6 @@ public class ProcessPaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // handle the 3DSecure lifecycle
-        if (Gateway.handle3DSecureResult(requestCode, resultCode, data, new ThreeDSecureCallback())) {
-            return;
-        }
-
         if (requestCode == REQUEST_CARD_INFO) {
             binding.collectCardInfoProgress.setVisibility(View.GONE);
 
@@ -136,10 +127,6 @@ public class ProcessPaymentActivity extends AppCompatActivity {
         binding.updateSessionProgress.setVisibility(View.GONE);
         binding.updateSessionSuccess.setVisibility(View.GONE);
         binding.updateSessionError.setVisibility(View.GONE);
-
-        binding.check3dsProgress.setVisibility(View.GONE);
-        binding.check3dsSuccess.setVisibility(View.GONE);
-        binding.check3dsError.setVisibility(View.GONE);
 
         binding.processPaymentProgress.setVisibility(View.GONE);
         binding.processPaymentSuccess.setVisibility(View.GONE);
