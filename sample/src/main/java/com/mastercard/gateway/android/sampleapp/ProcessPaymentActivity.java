@@ -374,7 +374,7 @@ public class ProcessPaymentActivity extends AppCompatActivity {
             binding.processPaymentProgress.setVisibility(View.GONE);
             binding.processPaymentError.setVisibility(View.VISIBLE);
 
-            showResult(R.drawable.failed, R.string.pay_error_processing_your_payment);
+            showResult(R.drawable.failed, throwable.getMessage());
         }
     }
 }

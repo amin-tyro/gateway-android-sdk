@@ -230,11 +230,11 @@ public class ApiController {
         GatewayMap response = new GatewayMap(jsonResponse);
 
         if (!response.containsKey("gatewayResponse")) {
-            throw new RuntimeException("Could not read gateway response");
+            throw new RuntimeException("Could not read gateway response: " + jsonResponse);
         }
 
         if (!response.containsKey("gatewayResponse.result") || !"SUCCESS".equalsIgnoreCase((String) response.get("gatewayResponse.result"))) {
-            throw new RuntimeException("Error processing payment");
+            throw new RuntimeException("Error processing payment, response: " + jsonResponse);
         }
 
         return (String) response.get("gatewayResponse.result");
