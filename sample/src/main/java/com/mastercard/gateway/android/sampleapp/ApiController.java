@@ -113,30 +113,7 @@ public class ApiController {
         }).start();
     }
 
-    public void check3DSecureEnrollment(final String sessionId, final String amount, final String currency, final String threeDSecureId, final Check3DSecureEnrollmentCallback callback) {
-        final Handler handler = new Handler(message -> {
-            if (callback != null) {
-                if (message.obj instanceof Throwable) {
-                    callback.onError((Throwable) message.obj);
-                } else {
-                    callback.onSuccess((GatewayMap) message.obj);
-                }
-            }
-            return true;
-        });
-
-        new Thread(() -> {
-            Message m = handler.obtainMessage();
-            try {
-                m.obj = executeCheck3DSEnrollment(sessionId, amount, currency, threeDSecureId);
-            } catch (Exception e) {
-                m.obj = e;
-            }
-            handler.sendMessage(m);
-        }).start();
-    }
-
-    public void completeSession(final String sessionId, final String orderId, final String transactionId, final String amount, final String currency, final String threeDSecureId, final Boolean isGooglePay, final CompleteSessionCallback callback) {
+    public void completeSession(final String sessionId, final String orderId, final String transactionId, final String amount, final String currency, final Boolean isGooglePay, final CompleteSessionCallback callback) {
         final Handler handler = new Handler(message -> {
             if (callback != null) {
                 if (message.obj instanceof Throwable) {
@@ -151,7 +128,7 @@ public class ApiController {
         new Thread(() -> {
             Message m = handler.obtainMessage();
             try {
-                m.obj = executeCompleteSession(sessionId, orderId, transactionId, amount, currency, threeDSecureId, isGooglePay);
+                m.obj = executeCompleteSession(sessionId, orderId, transactionId, amount, currency, isGooglePay);
             } catch (Exception e) {
                 m.obj = e;
             }
@@ -179,33 +156,7 @@ public class ApiController {
         return new Pair<>(sessionId, apiVersion);
     }
 
-    GatewayMap executeCheck3DSEnrollment(String sessionId, String amount, String currency, String threeDSecureId) throws Exception {
-        GatewayMap request = new GatewayMap()
-                .set("apiOperation", "CHECK_3DS_ENROLLMENT")
-                .set("session.id", sessionId)
-                .set("order.amount", amount)
-                .set("order.currency", currency)
-                .set("3DSecure.authenticationRedirect.responseUrl", merchantServerUrl + "/3DSecureResult.php?3DSecureId=" + threeDSecureId);
-
-        String jsonRequest = GSON.toJson(request);
-
-        String jsonResponse = doJsonRequest(new URL(merchantServerUrl + "/3DSecure.php?3DSecureId=" + threeDSecureId), jsonRequest, "PUT", null, null, HttpsURLConnection.HTTP_OK);
-
-        GatewayMap response = new GatewayMap(jsonResponse);
-
-        if (!response.containsKey("gatewayResponse")) {
-            throw new RuntimeException("Could not read gateway response");
-        }
-
-        // if there is an error result, throw it
-        if (response.containsKey("gatewayResponse.result") && "ERROR".equalsIgnoreCase((String) response.get("gatewayResponse.result"))) {
-            throw new RuntimeException("Check 3DS Enrollment Error: " + response.get("gatewayResponse.error.explanation"));
-        }
-
-        return response;
-    }
-
-    String executeCompleteSession(String sessionId, String orderId, String transactionId, String amount, String currency, String threeDSecureId, Boolean isGooglePay) throws Exception {
+    String executeCompleteSession(String sessionId, String orderId, String transactionId, String amount, String currency, Boolean isGooglePay) throws Exception {
         GatewayMap request = new GatewayMap()
                 .set("apiOperation", "PAY")
                 .set("session.id", sessionId)
@@ -214,10 +165,6 @@ public class ApiController {
                 .set("sourceOfFunds.type", "CARD")
                 .set("transaction.source", "INTERNET")
                 .set("transaction.frequency", "SINGLE");
-
-        if (threeDSecureId != null) {
-            request.put("3DSecureId", threeDSecureId);
-        }
 
         if (isGooglePay) {
             request.put("order.walletProvider", "GOOGLE_PAY");

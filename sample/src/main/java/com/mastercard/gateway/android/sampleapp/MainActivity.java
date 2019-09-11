@@ -1,6 +1,5 @@
 package com.mastercard.gateway.android.sampleapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
 
 import com.mastercard.gateway.android.sampleapp.databinding.ActivityMainBinding;
 import com.mastercard.gateway.android.sdk.Gateway;
